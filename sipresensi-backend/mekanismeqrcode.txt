@@ -1,0 +1,35 @@
+
+📌 Tabel Alur QR Code Dinamis untuk Absensi
+
+| Tahap | Aktor | Proses | Hasil |
+|-------|-------|--------|-------|
+| 1 | Sistem (API) | Generate **QR Code unik + token dinamis** (berlaku 30-60 detik). | QR Code ditampilkan di **monitor** di depan sekolah. |
+| 2 | Guru/Pegawai/Kepala Sekolah | Membuka aplikasi absensi → scan QR Code dengan kamera HP. | Aplikasi membaca data token unik dari QR Code. |
+| 3 | Aplikasi Mobile | Mengirim **token QR + NIK/NIP (login user) + GPS + selfie** ke API absensi. | Data dikirim ke server. |
+| 4 | API Absensi | Validasi: <br> - Apakah token QR masih aktif? <br> - Apakah lokasi GPS sesuai area sekolah? <br> - Apakah foto selfie sesuai user terdaftar? | Jika valid → Absensi berhasil. Jika tidak valid → Absensi gagal. |
+| 5 | Sistem | Menyimpan log absensi ke database. | Absensi tersimpan dengan status **Valid** atau **Ditolak**. |
+| 6 | Dashboard Admin | Kepala sekolah/admin bisa melihat laporan real-time absensi. | Data absensi bisa dipantau & diekspor. |
+
+
+📌 Diagram Alur QR Code Dinamis (High-Level)
+
++----------------+         +----------------+          +--------------------+
+|   API Server   |         |   Monitor LCD  |          |  Mobile App (User) |
++----------------+         +----------------+          +--------------------+
+        |                           |                            |
+        |--Generate QR (token)----->|                            |
+        |                           |                            |
+        |<------ Scan QR -----------|<------ Camera Scan --------|
+        |                           |                            |
+        |<---- Send Token + User + GPS + Selfie -----------------|
+        |                           |                            |
+        |-- Validate Token (time-based) ------------------------>|
+        |-- Validate GPS & Face -------------------------------->|
+        |<-- Response (Success/Fail) ----------------------------|
+        |                           |                            |
+        |--- Store Log in DB ----------------------------------->|
+
+
+⚡ Catatan:
+QR Code hanya sebagai "kunci sekali pakai" yang menghubungkan identitas user (guru/pegawai/kepala sekolah) dengan data absensinya. 
+Sistem tetap butuh validasi lain (GPS & selfie) supaya tidak bisa disalahgunakan.

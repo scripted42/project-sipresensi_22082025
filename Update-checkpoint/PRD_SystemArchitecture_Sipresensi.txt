@@ -1,0 +1,277 @@
+===============================================================================
+                    SIPRESENSI - PRODUCT REQUIREMENTS DOCUMENT
+             (PRD) & SYSTEM ARCHITECTURE (Lengkap dalam 1 File)
+-------------------------------------------------------------------------------
+Nama Aplikasi       : Sipresensi (Sistem Presensi Digital Sekolah)
+Versi               : 1.0
+Tanggal             : 5 April 2025
+Tech Stack          : React Native + Tamagui + Laravel + MySQL (XAMPP)
+Target Platform     : Android & iOS
+Tujuan              : Aplikasi absensi digital sekolah dengan verifikasi 
+                      lokasi, foto selfie, dan QR Code dinamis.
+===============================================================================
+
+
+1. GAMBARAN UMUM
+---------------
+Sipresensi adalah aplikasi mobile untuk manajemen absensi digital di lingkungan 
+sekolah. Aplikasi ini dirancang untuk siswa, guru, pegawai, kepala sekolah, dan 
+admin, dengan fitur keamanan tinggi seperti verifikasi lokasi GPS, foto selfie, 
+dan pemindaian QR Code dinamis yang berganti setiap 10 detik.
+
+Aplikasi ini menggunakan:
+- Frontend: React Native (Expo) + Tamagui Animated(UI modern)
+- Backend: Laravel (PHP) sebagai REST API
+- Database: MySQL (via XAMPP)
+- Hosting: Lokal (PC/server sekolah), bisa diakses via jaringan internal/eksternal
+
+
+2. TUJUAN APLIKASI
+------------------
+- Menggantikan sistem absensi manual (buku daftar hadir).
+- Meningkatkan akurasi absensi dengan verifikasi ganda/triple.
+- Mencegah kecurangan absensi (tidak hadir fisik).
+- Mempermudah pengajuan izin digital dengan lampiran.
+- Memberikan dashboard real-time untuk monitoring oleh kepala sekolah & admin.
+- Mendukung mode offline untuk fleksibilitas.
+
+
+3. TARGET PENGGUNA & PERAN
+--------------------------
+| Peran               | Jumlah | Hak Akses Utama |
+|---------------------|--------|-----------------|
+| Siswa               | ~1000  | Absensi (via guru), lihat riwayat, ajukan izin |
+| Guru                | ~50    | Absensi pribadi, isi absensi siswa, scan QR |
+| Pegawai Sekolah     | ~20    | Absensi pribadi, ajukan izin |
+| Kepala Sekolah      | 1      | Pantau semua data, setujui izin, buat pengumuman |
+| Admin               | ~3     | Kelola pengguna, sistem, dan hak akses |
+
+
+4. FITUR INTI APLIKASI
+----------------------
+
+4.1. Autentikasi & Otorisasi
+- Login Multi-Peran: Gunakan NISN (siswa), NIP (guru), atau NIK (pegawai) sebagai username.
+- JWT Token: Autentikasi aman dengan token dan refresh token.
+- Auto-Logout: Setelah 15 menit tidak aktif.
+- Enkripsi Password: Di backend menggunakan bcrypt.
+
+4.2. Dashboard Berbasis Peran
+- Siswa/Staff: Riwayat absensi, izin mendatang, pengumuman.
+- Guru: Ringkasan absensi kelas, aktivitas terbaru.
+- Kepala Sekolah/Admin: Statistik global, izin menunggu, pengumuman terbaru.
+- Slider Tanggal: Geser horizontal untuk melihat data per hari.
+- Activity Feed: Update aktivitas real-time (misal: "Andi izin sakit").
+- Carousel Pengumuman: Otomatis bergulir, diambil dari API.
+
+4.3. Sistem Absensi (Guru, Pegawai, Kepala Sekolah)
+Untuk absen, pengguna harus memenuhi 3 syarat:
+1. Verifikasi Lokasi (GPS): Harus berada dalam radius 100 meter dari sekolah.
+2. Foto Selfie: Ambil foto langsung dari kamera perangkat.
+3. Scan QR Code Dinamis: Pindai QR yang ditampilkan di monitor sekolah dan berganti tiap 10 detik.
+
+4.4. Absensi Siswa (oleh Guru/Pegawai)
+- Guru scan QR Code statis di kartu pelajar siswa.
+- Bisa dilakukan secara massal (per kelas).
+- Opsi input manual jika QR rusak.
+
+4.5. Manajemen Izin
+- Ajukan Izin: Jenis (izin, cuti, dinas luar, sakit).
+- Editor teks kaya: Alasan dengan format.
+- Lampiran file: Unggah surat dokter (PDF/gambar).
+- Pemilih tanggal: Kalender bawaan.
+- Hitung otomatis: Sisa kuota izin.
+- Riwayat Izin: Lihat status (menunggu, disetujui, ditolak).
+- Persetujuan (Kepala Sekolah/Admin): Setujui/tolak + komentar.
+
+4.6. Pengumuman (Kepala Sekolah/Admin)
+- Buat Pengumuman: Form dengan judul dan isi.
+- Daftar Pengumuman: Tampilkan terbaru dulu.
+- Edit/Hapus: Hanya oleh pembuat atau admin.
+
+4.7. Manajemen Profil
+- Lihat Profil: Nama, email, nomor telepon, peran, foto.
+- Edit Profil: Ubah data kecuali peran.
+- Ganti Password: Validasi password lama, enkripsi baru.
+
+4.8. Manajemen Pengguna (Admin)
+- Daftar Pengguna: Tampilkan semua dengan filter peran.
+- Tambah Pengguna: Isi form (NIK, nama, email, peran).
+- Edit/Hapus Pengguna: Ubah atau nonaktifkan akun.
+
+4.9. Tab Navigation dengan Animasi
+- Tab Bar di bagian bawah (Bottom Tab Navigator).
+- 5 Tab: Dashboard, Absensi, Izin, Pengumuman, Profil.
+- Animasi saat berpindah tab:
+   - Transisi slide horizontal (slide left/right).
+   - Efek scale kecil saat tab aktif.
+   - Warna ikon dan teks berubah halus (fade in/out).
+- Animasi menggunakan: `react-native-screens`, `react-native-reanimated`, `@react-navigation/material-bottom-tabs`.
+- Desain modern dengan Tamagui (komponen: Button, Card, Text, View).
+
+
+5. SYSTEM ARCHITECTURE
+----------------------
+
+Diagram Arsitektur:
+
+                   +---------------------+
+                   |   Perangkat Mobile  |
+                   | [React Native App]  |
+                   |   (UI: Tamagui)     |
+                   +----------+----------+
+                              |
+                    HTTP/HTTPS (REST API)
+                              |
+                   +----------v----------+
+                   |  PC/Laptop Server   |
+                   |                     |
+                   | +-----------------+ |
+                   | |   Laravel API   | |
+                   | | (Backend PHP)   | |
+                   +--------+--------+ |
+                   |          |          |
+                   | +--------v--------+ |
+                   | |  MySQL Database | |
+                   | |  (via XAMPP)    | |
+                   +-----------------+ |
+                   +---------------------+
+
+
+5.1. Aplikasi Mobile (Client)
+- Teknologi: React Native (Expo)
+- UI Framework: Tamagui + Nativewind (Tailwind CSS untuk mobile)
+- Library Pendukung:
+   - react-navigation (animasi tab & stack)
+   - react-native-reanimated (animasi halus)
+   - axios (HTTP client)
+   - zustand (state management)
+   - expo-camera (scan QR & foto)
+   - expo-location (GPS)
+   - expo-calendar (pemilih tanggal)
+   - AsyncStorage (offline mode)
+- Tanggung Jawab:
+   - Menampilkan UI modern dengan animasi tab.
+   - Mengelola navigasi antar layar.
+   - Mengirim data ke backend Laravel via REST API.
+   - Menyimpan data lokal untuk mode offline.
+   - Mengakses fitur perangkat: kamera, GPS, penyimpanan.
+   - Menangani autentikasi (JWT) dan sesi.
+
+5.2. Backend Server (API)
+- Teknologi: Laravel (PHP)
+- Framework: Laravel 10+ (REST API only)
+- Library Pendukung:
+   - Laravel Sanctum (autentikasi API)
+   - Intervention Image (resize foto selfie)
+   - Flysystem (upload file)
+   - Carbon (manajemen tanggal)
+- Tanggung Jawab:
+   - Menyediakan endpoint REST API:
+      - /api/auth/login
+      - /api/attendance/checkin
+      - /api/attendance/scan-qr
+      - /api/attendance/history
+      - /api/leaves
+      - /api/announcements
+      - /api/users
+   - Memproses logika bisnis (validasi lokasi, cek kuota izin, dll).
+   - Validasi dan sanitasi input (XSS, SQL Injection).
+   - Berinteraksi dengan database MySQL.
+   - Mengembalikan respons JSON.
+   - Mendukung mode stateless (JWT).
+
+5.3. Database (MySQL via XAMPP)
+- Teknologi: MySQL
+- Manajemen: XAMPP (Apache + MySQL + phpMyAdmin)
+- Lokasi: Diinstal pada PC/laptop yang sama dengan server Laravel
+- Tabel Utama:
+   - users
+   - attendance
+   - leaves
+   - announcements
+   - dynamic_qr_tokens
+   - roles
+   - classes
+
+Tabel: dynamic_qr_tokens
+| Kolom       | Tipe Data     | Deskripsi |
+|-------------|---------------|-----------|
+| id          | BIGINT (PK)   | ID unik |
+| token       | VARCHAR(255)  | Token acak (a1b2c3d4e5f6) |
+| created_at  | DATETIME      | Waktu pembuatan |
+| expires_at  | DATETIME      | created_at + 10 detik |
+| used        | BOOLEAN       | Sudah digunakan? |
+| used_by     | BIGINT        | user_id yang menggunakannya |
+
+
+6. MEKANISME QR CODE DINAMIS
+----------------------------
+- Ditampilkan di monitor sekolah (depan ruang guru/gerbang).
+- Web client (HTML + JS) panggil GET /api/qrcode/dynamic tiap 10 detik.
+- Laravel generate token unik, simpan di cache (10 detik).
+- Aplikasi mobile scan QR → kirim token ke backend → dicek valid & belum digunakan.
+- Jika valid + lokasi + foto OK → absensi berhasil.
+- Token ditandai "used" agar tidak bisa dipakai lagi.
+
+Keamanan: Mencegah rekam layar, foto QR, atau absen dari jarak jauh.
+
+
+7. ALUR DATA (Contoh: Check-in)
+-------------------------------
+1. Pengguna buka aplikasi → login.
+2. Tekan "Check-in" di dashboard.
+3. Aplikasi ambil lokasi GPS → cek dalam radius 100m.
+4. Buka kamera → scan QR dinamis di monitor.
+5. Ambil foto selfie.
+6. Kirim ke Laravel: lokasi, foto, token QR, timestamp.
+7. Laravel verifikasi:
+   - Token valid & belum kadaluarsa
+   - Lokasi dalam radius
+   - Belum absen hari ini
+8. Jika valid → simpan ke database → kirim respons sukses.
+9. Aplikasi tampilkan: "Absensi berhasil!"
+
+
+8. PERTIMBANGAN JARINGAN
+------------------------
+- Pengembangan: 
+   - Backend: http://192.168.1.10:8000
+   - Aplikasi: Gunakan IP lokal
+- Produksi:
+   - Gunakan DDNS (misal: mikrotik.com)
+   - Port forwarding: port publik 8000 → IP lokal:8000
+   - URL: http://sipresensi.cloud.mikrotik.com:8000
+
+
+9. KEAMANAN
+-----------
+- HTTPS di produksi (SSL/TLS)
+- JWT dengan refresh token
+- Validasi input di backend
+- Firewall: Batasi akses ke port 8000 & 3306
+- Backup database harian
+
+
+10. ALUR PENGEMBANGAN
+---------------------
+1. Setup: XAMPP, Node.js, Expo, PHP, Composer
+2. Database: Buat skema di phpMyAdmin
+3. Backend: Laravel (API + Sanctum + QR generator)
+4. Frontend: React Native + Tamagui + animasi tab
+5. Testing: Postman, HP fisik (Expo Go)
+6. Deploy: Jalankan Laravel, aktifkan XAMPP, konfigurasi jaringan
+7. Build: APK (Android) atau App Store (iOS)
+
+
+11. SKALABILITAS MASA DEPAN
+---------------------------
+- Migrasi database ke cloud (AWS RDS)
+- Containerisasi backend (Docker)
+- Load balancing untuk traffic tinggi
+- Real-time notifikasi (Laravel Echo + WebSocket)
+
+
+===============================================================================
+                             AKHIR DOKUMEN
+===============================================================================

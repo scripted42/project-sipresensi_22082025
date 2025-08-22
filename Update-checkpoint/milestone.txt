@@ -1,0 +1,128 @@
+Urutan Pengembangan Frontend### 
+1. 🔧 Setup Awal & Konfigurasi [PRIORITAS TERTINGGI]
+  Sebelum mulai coding, pastikan:
+   - [ ] Base URL API di services/api.js disesuaikan dengan backend lokal- [ ] Environment Variables untuk
+     konfigurasi berbeda (development/production)- [ ] Error Boundary untuk menangani error global
+   - [ ] Loading States konsisten di seluruh aplikasi
+
+  2. 🔐 LOGIN SCREEN [PRIORITAS TINGGI]
+  Kenapa mulai sini?- Ini adalah entry point pertama user
+   - Validasi integrasi backend API paling awal
+   - Foundation untuk semua fitur lainnya
+
+  Komponen yang perlu dikembangkan:
+   - [ ] Halaman login (app/index.tsx)
+   - [ ] Validasi form yang lebih robust- [ ] Penanganan error yang user-friendly
+   - [ ] Loading state dengan indikator yang jelas- [ ] Penyimpanan token/user data di AsyncStorage
+   - [ ] Auto-navigasi berdasarkan role user
+
+  ###3. 🎯 DASHBOARD [PRIORITAS TINGGI]Kenapa selanjutnya?
+   - Ini adalah home screen setelah login- Menampilkan role-based content
+   - Foundation untuk navigasi ke fitur lain
+
+  Komponen yang perlu dikembangkan:
+   - [ ] Dashboard role-based (siswa, guru, admin, dll)
+   - [ ] Activity feed dengan data real dari API- [ ] Carousel pengumuman- [ ] Date slider yang fungsional
+   - [ ] Quick action buttons
+   - [ ] Statistik sesuai role
+
+  ###4. 👤 PROFILE MANAGEMENT [PRIORITAS TINGGI]Kenapa penting?
+   - Setiap user perlu manage profil mereka
+   - Testing CRUD operations- Foundation untuk fitur edit profil & ganti passwordKomponen yang perlu dikembangkan:- [
+     ] Menampilkan data profil dari API
+   - [ ] Edit profil dengan validasi
+   - [ ] Ganti password dengan konfirmasi
+   - [ ] Logout dengan cleanup token
+
+  ###5. 📋 ABSENSI SISWA (untuk Guru) [PRIORITAS TERTINGGI]
+  Kenapa prioritas tinggi?- Ini adalah fitur core aplikasi
+   - Ada alur kompleks (lokasi → selfie → QR)
+   - Perlu testing integrasi kamera & lokasi
+
+  Komponen yang perlu dikembangkan:
+   - [ ] Verifikasi lokasi dengan radius 100m
+   - [ ] Pengambilan foto selfie
+   - [ ] Scan QR Code siswa- [ ] Input manual NISN (alternatif jika QR rusak)- [ ] Absensi massal per kelas        
+   - [ ] Status absensi real-time### 6. 打卡 PERSONAL ATTENDANCE (Guru/Pegawai/Kepsek) [PRIORITAS TINGGI]
+  Kenapa penting?
+   - Fitur core untuk staf
+   - Validasi triple (lokasi + selfie + QR dinamis)
+
+  Komponen yang perlu dikembangkan:
+   - [ ] Alur absensi bertahap
+   - [ ] Timer untuk QR dinamis (15 detik)- [ ] Validasi lokasi, foto, dan QR token
+
+  ###7. 📝 MANAJEMEN IZIN [PRIORITAS MENENGAH-TINGGI]
+  Kenapa setelah absensi?- Fitur penting setelah login dan dashboard
+   - Untuk semua role pengguna
+
+  Komponen yang perlu dikembangkan:
+   - [ ] Form pengajuan izin dengan file upload- [ ] List riwayat izin
+   - [ ] Detail izin dengan status
+   - [ ] Persetujuan izin (untuk kepala sekolah/admin)
+
+  8. 📢 PENGUMUMAN [PRIORITAS MENENGAH]
+  Kenapa setelah izin?
+   - Info sekunder tapi penting
+   - Umum untuk semua roleKomponen yang perlu dikembangkan:- [ ] List pengumuman dengan pagination
+   - [ ] Detail pengumuman
+   - [ ] Buat/Update/Delete (untuk admin/kepsek)
+
+  9. 👥 MANAJEMEN PENGGUNA [PRIORITAS MENENGAH]Hanya untuk admin:
+   - [ ] List pengguna dengan filter role
+   - [ ] Tambah/Edit/Hapus pengguna
+   - [ ] Reset password- [ ] Aktivasi/Non-aktivasi akun
+
+  Rekomendasi Implementasi Bertahap
+
+  Phase 1: Foundation (1-2 hari)
+
+   1 1. Setup konfigurasi API
+   2 2. Testing login dengan backend
+   3 3. Basic dashboard dengan dummy data
+   4 4. Profile management dasar```
+   5 
+  Phase 2: Core Features (3-5 hari)
+
+   1 1. Absensi siswa (scan QR & input manual)2. Absensi personal (staff/guru/kepsek)
+   2 3. Manajemen izin (pengajuan & persetujuan)
+
+  Phase 3: Supporting Features (2-3 hari)
+   1 1. Pengumuman2. Manajemen pengguna (admin only)
+   2 3. Advanced dashboard dengan data real
+
+  Phase 4: Polish & Testing (2-3 hari)
+
+   1 1. Error handling improvement
+   2 2. Loading states & UX enhancement
+   3 3. Testing semua alur penggunaan
+   4 4. Optimasi performa
+   5 ```## Kenapa Urutan Ini?
+   6 
+  ✅ Keuntungan Pendekatan Bertahap:
+
+   1. Quick Wins: Login & dashboard memberikan hasil cepat
+   2. Foundation Solid: Setiap fitur membangun foundation untuk berikutnya3. Integration Testing Awal: Memastikan  
+      komunikasi backend/frontend lancar
+   4. User Journey Complete: Dari login sampai absensi pokok sudah bisa digunakan5. Risk Mitigation: Memulai dari  
+      fitur paling kritis dulu### 🔧 Teknologi yang Perlu Difokuskan:1. API Service: Harus solid karena digunakan  
+      semua fitur2. State Management: Pakai Zustand untuk manajemen state global
+   3. Navigation: Expo Router untuk routing yang smooth
+   4. Camera Integration: Expo Camera untuk selfie & QR scanning
+   5. Location Services: Expo Location untuk verifikasi lokasi
+   6. UI Components: Tamagui untuk tampilan konsisten
+
+  🎯 Metrik Keberhasilan Tiap Phase:
+
+   - Phase 1: Bisa login → lihat dashboard → logout
+   - Phase 2: Bisa absen (semua jenis) → lihat riwayat absensi
+   - Phase 3: Bisa ajukan izin → lihat pengumuman → manage pengguna (admin)
+   - Phase 4: Semua fitur berjalan tanpa error → performa optimal## Rekomendasi Teknis Awal:
+
+   1. Mulai dengan login screen - ini akan menguji koneksi API paling awal
+   2. Gunakan mock data dulu untuk development awal, lalu ganti dengan API asli
+   3. Implementasi error boundaries untuk menangani error API dengan baik
+   4. Buat reusable components untuk tombol, form inputs, cards, dll
+   5. Gunakan TypeScript secara konsisten untuk type safetyApakah Anda ingin saya bantu mulai dengan salah satu phase
+      ini secara detail? Misalnya, kita bisa mulai dengan mengembangkan login screen dan koneksi API-nya terlebih    
+      dahulu.

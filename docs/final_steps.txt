@@ -1,0 +1,33 @@
+# Langkah-langkah Terakhir untuk Menyelesaikan Konfigurasi API SiPresensi
+
+## 1. Perbaiki Konfigurasi Bootstrap
+File `bootstrap/app.php` sudah diperbaiki untuk menyertakan routing API.
+
+## 2. Bersihkan Cache
+Jalankan perintah berikut untuk membersihkan semua cache:
+```bash
+php artisan optimize:clear
+```
+
+## 3. Verifikasi Route API
+Pastikan route API sudah muncul dalam daftar:
+```bash
+php artisan route:list
+```
+
+## 4. Periksa Kredensial Login
+Jika login masih gagal dengan pesan "Kredensial tidak valid", periksa:
+- Pastikan pengguna dengan nisn_nip_nik "1001" ada di tabel users
+- Pastikan password sudah di-hash dengan benar menggunakan bcrypt
+
+## 5. Coba Login dengan Kredensial yang Benar
+Berdasarkan data di Database_Sipresensi_Final.sql, coba login dengan:
+- nisn_nip_nik: "1001"
+- password: "password" (bukan "admin")
+
+Perintah untuk menguji:
+```bash
+curl -X POST http://127.0.0.1:8000/api/auth/login -H "Content-Type: application/json" -d "{\"nisn_nip_nik\": \"1001\", \"password\": \"password\"}"
+```
+
+Jika berhasil, Anda akan mendapatkan respons dengan token autentikasi.

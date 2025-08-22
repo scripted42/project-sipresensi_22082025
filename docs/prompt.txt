@@ -1,0 +1,19 @@
+Halo Qwen, saya ingin melanjutkan project SiPresensi yang telah kita kerjakan sebelumnya. Berdasarkan checkpoint terakhir kita di file CHECKPOINT_20250821_1930.md, masih ada beberapa fitur yang belum
+diimplementasikan:
+
+1. Auto-Logout: Setelah 15 menit tidak aktif
+2. Refresh token untuk autentikasi3. Absensi massal per kelas4. Opsi input manual jika QR rusak/hilang
+5. Dashboard berbasis peran dengan activity feed
+6. Carousel Pengumuman7. Notifikasi real-time
+8. Tab Navigation dengan Animasi (untuk frontend mobile)
+
+Berdasarkan dokumentasi PRD di file PRD_SystemArchitecture_Sipresensi.txt, saya ingin melanjutkan dengan mengimplementasikan fitur-fitur tersebut.   
+Bisa kamu bantu untuk:
+1. Meninjau kembali struktur project dan codebase kita
+2. Mengimplementasikan fitur auto-logout dan refresh token terlebih dahulu
+3. Membuat dokumentasi teknis untuk setiap fitur yang diimplementasikan   
+4. Mengupdate dokumentasi API jika ada perubahan endpoint
+5. Melakukan testing untuk setiap fitur baru
+
+Silakan mulai dengan fitur auto-logout dan refresh token. Saya sudah      
+menyiapkan environment yang sama seperti sebelumnya.

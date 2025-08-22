@@ -1,0 +1,63 @@
+SHOW TABLES;
+announcements
+
+attendance
+
+cache
+
+cache_locks
+
+classes
+
+dynamic_qr_tokens
+
+failed_jobs
+
+job_batches
+
+jobs
+
+leaves
+
+migrations
+
+offline_sync_log
+
+personal_access_tokens
+
+roles
+
+sessions
+
+settings
+
+student_class
+
+users
+
+
+DESCRIBE users;
+| Field          | Type         | Null | Key | Default                                             | Extra           |
+| -------------- | ------------ | ---- | --- | --------------------------------------------------- | --------------- |
+| id             | bigint(20)   | NO   | PRI | NULL                                                | auto\_increment |
+| nisn\_nip\_nik | varchar(50)  | NO   | UNI | NULL                                                |                 |
+| name           | varchar(100) | NO   |     | NULL                                                |                 |
+| email          | varchar(100) | YES  | UNI | NULL                                                |                 |
+| phone          | varchar(20)  | YES  |     | NULL                                                |                 |
+| password       | varchar(255) | NO   |     | NULL                                                |                 |
+| role\_id       | int(11)      | NO   | MUL | NULL                                                |                 |
+| photo\_path    | varchar(255) | YES  |     | NULL                                                |                 |
+| is\_active     | tinyint(1)   | NO   |     | 1                                                   |                 |
+| created\_at    | timestamp    | NO   |     | current\_timestamp()                                |                 |
+| updated\_at    | timestamp    | NO   |     | current\_timestamp() on update current\_timestamp() |                 |
+
+DESCRIBE dynamic_qr_tokens;
+| Field       | Type         | Null | Key | Default              | Extra           |
+| ----------- | ------------ | ---- | --- | -------------------- | --------------- |
+| id          | bigint(20)   | NO   | PRI | NULL                 | auto\_increment |
+| token       | varchar(255) | NO   | UNI | NULL                 |                 |
+| created\_at | datetime     | NO   |     | current\_timestamp() |                 |
+| expires\_at | datetime     | NO   | MUL | NULL                 |                 |
+| used        | tinyint(1)   | NO   |     | 0                    |                 |
+| used\_by    | bigint(20)   | YES  | MUL | NULL                 |                 |
+| used\_at    | datetime     | YES  |     | NULL                 |                 |

@@ -1,0 +1,31 @@
+# Progress Fix API SiPresensi
+
+## Masalah Utama:
+1. API endpoint menghasilkan 404 Not Found
+2. Route API tidak muncul dalam daftar route
+3. Tabel migrasi tidak ditemukan
+4. File Kernel.php tidak ada di app/Http
+
+## Langkah yang Telah Dilakukan:
+1. Memperbaiki file .env
+2. Membuat file Database_Sipresensi_Complete.sql yang mencakup semua tabel yang diperlukan
+3. Membuat app/Http/Kernel.php
+4. Membuat middleware dasar (TrimStrings.php, TrustProxies.php)
+5. Menjalankan vendor:publish untuk Laravel Sanctum
+
+## Masalah Terkini:
+1. Tabel migrasi tidak ditemukan
+2. Route API masih tidak terdaftar
+
+## Solusi yang Disarankan:
+1. Jalankan perintah berikut di direktori sipresensi-backend:
+   ```
+   php artisan migrate:install
+   php artisan migrate
+   php artisan route:clear
+   php artisan route:list
+   ```
+
+2. Jika masih bermasalah, perlu memeriksa apakah RouteServiceProvider ada dan dikonfigurasi dengan benar
+
+3. Setelah route API muncul dalam daftar, uji kembali endpoint login

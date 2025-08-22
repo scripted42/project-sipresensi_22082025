@@ -1,0 +1,43 @@
+# Langkah-langkah Mengatur Database dan API SiPresensi
+
+## 1. Buat Database di MySQL
+Buka phpMyAdmin atau tool MySQL lainnya dan jalankan perintah berikut:
+```sql
+CREATE DATABASE IF NOT EXISTS sipresensi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+## 2. Impor Skema Database
+Impor file `Database_Sipresensi_Final.sql` ke database `sipresensi` yang baru dibuat.
+
+## 3. Masuk ke Direktori Backend
+Buka terminal/command prompt dan masuk ke direktori `sipresensi-backend`:
+```bash
+cd sipresensi-backend
+```
+
+## 4. Bersihkan Cache Laravel
+Jalankan perintah berikut untuk membersihkan cache konfigurasi dan route:
+```bash
+php artisan config:clear
+php artisan route:clear
+```
+
+## 5. Cek Status Migrasi
+Periksa status migrasi untuk memastikan semua migrasi sudah terdaftar:
+```bash
+php artisan migrate:status
+```
+
+## 6. Cek Daftar Route
+Lihat daftar route yang tersedia untuk memastikan route API sudah dimuat:
+```bash
+php artisan route:list
+```
+
+## 7. Uji API Login
+Setelah semua langkah di atas selesai, uji endpoint login dengan perintah berikut:
+```bash
+curl -X POST http://127.0.0.1:8000/api/auth/login -H "Content-Type: application/json" -d "{\"nisn_nip_nik\": \"1001\", \"password\": \"admin\"}"
+```
+
+Jika semua berjalan dengan baik, Anda seharusnya mendapatkan respons JSON dengan token autentikasi.
