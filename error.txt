@@ -1,0 +1,64 @@
+FHL@DESKTOP-MGBPB44 MINGW64 /d/Deploy/Qoder/project-sipresensi_22082025/sipresensi-mobile (main)
+$ flutter run
+Resolving dependencies... (1.1s)
+Downloading packages...
+  characters 1.4.0 (1.4.1 available)
+  connectivity_plus 5.0.2 (6.1.5 available)
+  connectivity_plus_platform_interface 1.2.4 (2.0.1 available)
+  file_picker 8.3.7 (10.3.2 available)
+  flutter_lints 5.0.0 (6.0.0 available)
+  flutter_offline 3.0.1 (5.0.0 available)
+  flutter_secure_storage_linux 1.2.3 (2.0.1 available)
+  flutter_secure_storage_macos 3.1.3 (4.0.0 available)
+  flutter_secure_storage_platform_interface 1.1.2 (2.0.1 available)
+  flutter_secure_storage_web 1.2.1 (2.0.0 available)
+  flutter_secure_storage_windows 3.1.2 (4.0.0 available)
+  geolocator 13.0.4 (14.0.2 available)
+  geolocator_android 4.6.2 (5.0.2 available)
+  js 0.6.7 (0.7.2 available)
+  lints 5.1.1 (6.0.0 available)
+  material_color_utilities 0.11.1 (0.13.0 available)
+  meta 1.16.0 (1.17.0 available)
+  mobile_scanner 5.2.3 (7.0.1 available)
+  network_info_plus 4.1.0+1 (6.1.4 available)
+  network_info_plus_platform_interface 1.1.3 (2.0.2 available)
+  petitparser 6.1.0 (7.0.1 available)
+  test_api 0.7.6 (0.7.7 available)
+  xml 6.5.0 (6.6.1 available)
+Got dependencies!
+23 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Launching lib\main.dart on sdk gphone64 x86 64 in debug mode...
+lib/shared/widgets/bottom_navigation.dart:126:41: Error: Not a constant expression.
+                onPressed: Navigator.of(context).pop,
+                                        ^^^^^^^
+lib/shared/widgets/bottom_navigation.dart:126:38: Error: Method invocation is not a constant expression.
+                onPressed: Navigator.of(context).pop,
+                                     ^^
+lib/features/dashboard/dashboard_screen.dart:351:22: Error: The method 'getLeaveTypeName' isn't defined for the type 'Leave'.
+ - 'Leave' is from 'package:sipresensi_mobile/core/models/dashboard.dart' ('lib/core/models/dashboard.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'getLeaveTypeName'.
+            '${leave.getLeaveTypeName()} - ${leave.getStatusName()}',
+                     ^^^^^^^^^^^^^^^^
+lib/features/dashboard/dashboard_screen.dart:351:52: Error: The method 'getStatusName' isn't defined for the type 'Leave'. - 'Leave' is from 'package:sipresensi_mobile/core/models/dashboard.dart' ('lib/core/models/dashboard.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'getStatusName'.
+            '${leave.getLeaveTypeName()} - ${leave.getStatusName()}',
+                                                   ^^^^^^^^^^^^^
+Target kernel_snapshot_program failed: Exception
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileFlutterBuildDebug'.
+> Process 'command 'C:\flutter\flutter\bin\flutter.bat'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 2s
+Running Gradle task 'assembleDebug'...                             63.5s
+Error: Gradle task assembleDebug failed with exit code 1

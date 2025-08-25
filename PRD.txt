@@ -110,7 +110,7 @@ Untuk absen, pengguna harus memenuhi 3 syarat:
 4.9. Tab Navigation dengan Animasi & FAB Scan
 - Tab Bar di bagian bawah (Bottom Tab Navigator).
 - 5 Tab: Dashboard, Absensi, [FAB], Izin, Profil.
-- FAB (Floating Action Button): Tombol besar di tengah untuk scan QR.
+- FAB (Floating Action Button): Tombol besar di tengah untuk melakukan absensi.
 - Animasi saat berpindah tab:
    - Transisi slide horizontal (PageTransition).
    - Efek scale kecil saat tab aktif.

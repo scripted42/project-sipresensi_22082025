@@ -1,0 +1,61 @@
+FITUR INTI APLIKASI
+----------------------
+
+4.1. Autentikasi & Otorisasi
+- Login Multi-Peran: Gunakan NISN (siswa), NIP (guru), atau NIK (pegawai) sebagai username.
+- JWT Token: Autentikasi aman dengan token dan refresh token.
+- Auto-Logout: Setelah 15 menit tidak aktif.
+- Enkripsi Password: Di backend menggunakan bcrypt.
+
+4.2. Dashboard Berbasis Peran
+- Siswa/Staff: Riwayat absensi, izin mendatang, pengumuman.
+- Guru: Ringkasan absensi kelas, aktivitas terbaru.
+- Kepala Sekolah/Admin: Statistik global, izin menunggu, pengumuman terbaru.
+- Slider Tanggal: Geser horizontal untuk melihat data per hari.
+- Activity Feed: Update aktivitas real-time (misal: "Andi izin sakit").
+- Carousel Pengumuman: Otomatis bergulir, diambil dari API.
+
+4.3. Sistem Absensi (Guru, Pegawai, Kepala Sekolah)
+Untuk absen, pengguna harus memenuhi 3 syarat:
+1. Verifikasi Lokasi (GPS): Harus berada dalam radius 100 meter dari sekolah. periksa folder database untuk tag lokasi sekolah yang digunakan
+2. Foto Selfie: Ambil foto langsung dari kamera perangkat.
+3. Scan QR Code Dinamis: Pindai QR yang ditampilkan di monitor sekolah dan berganti tiap 10 detik.
+
+4.4. Absensi Siswa (oleh Guru/Pegawai)
+- Guru scan QR Code statis di kartu pelajar siswa.
+- Bisa dilakukan secara massal (per kelas).
+- Opsi input manual jika QR rusak.
+
+4.5. Manajemen Izin
+- Ajukan Izin: Jenis (izin, cuti, dinas luar, sakit).
+- Editor teks kaya: Alasan dengan format.
+- Lampiran file: Unggah surat dokter (PDF/gambar).
+- Pemilih tanggal: Kalender bawaan.
+- Hitung otomatis: Sisa kuota izin.
+- Riwayat Izin: Lihat status (menunggu, disetujui, ditolak).
+- Persetujuan (Kepala Sekolah/Admin): Setujui/tolak + komentar.
+
+4.6. Pengumuman (Kepala Sekolah/Admin)
+- Buat Pengumuman: Form dengan judul dan isi.
+- Daftar Pengumuman: Tampilkan terbaru dulu.
+- Edit/Hapus: Hanya oleh pembuat atau admin.
+
+4.7. Manajemen Profil
+- Lihat Profil: Nama, email, nomor telepon, peran, foto.
+- Edit Profil: Ubah data kecuali peran.
+- Ganti Password: Validasi password lama, enkripsi baru.
+
+4.8. Manajemen Pengguna (Admin)
+- Daftar Pengguna: Tampilkan semua dengan filter peran.
+- Tambah Pengguna: Isi form (NIK, nama, email, peran).
+- Edit/Hapus Pengguna: Ubah atau nonaktifkan akun.
+
+4.9. Tab Navigation dengan Animasi
+- Tab Bar di bagian bawah (Bottom Tab Navigator).
+- 5 Tab: Dashboard, Absensi, Izin, Pengumuman, Profil, Setting(login admin)
+- Animasi saat berpindah tab:
+   - Transisi slide horizontal (slide left/right).
+   - Efek scale kecil saat tab aktif.
+   - Warna ikon dan teks berubah halus (fade in/out).
+- Menggunakan Animasi
+- Desain modern
